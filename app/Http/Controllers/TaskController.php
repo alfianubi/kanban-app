@@ -13,7 +13,7 @@ class TaskController extends Controller
     {
         $this->tasks = [
             (object) [
-                'id' => 1,
+                'id' => 1, // id ini digunakan pada Path di route untuk menspesifikasi task mana yang diubah
                 'name' => 'Develop Final Project',
                 'detail' => 'Kanban project using PHP and Laravel',
                 'due_date' => '2023-04-30',
@@ -57,14 +57,25 @@ class TaskController extends Controller
         ];
     }
 
-    // tambah index method
+    // tambah index method halaman Tasks
     public function index()
     {
-        $pageTitle = 'Task List'; // tambahan
+        $pageTitle = 'Task List'; // Ditambahkan
         $tasks = $this->tasks;
         return view('tasks.index', [
-            'pageTitle' => $pageTitle, // tambahan
-            'tasks' => $tasks
+        'pageTitle' => $pageTitle, //Ditambahkan
+        'tasks' => $tasks,
     ]);
+    }
+
+    // tambah method halaman Edit
+    public function edit($id)
+    {
+        $pageTitle = 'Edit Task';
+        $tasks = $this->tasks;
+
+        $tasks = $tasks[$id - 1];
+        return view('tasks.edit', ['pageTitle' => $pageTitle,
+        'tasks' => $tasks]);
     }
 }

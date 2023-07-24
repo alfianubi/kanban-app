@@ -1,6 +1,7 @@
 @extends('layouts.master')
 
 <!-- judul title head -->
+@section('pageTitle', $pageTitle)
 @section('pageTitle', 'Home') 
 
 @section('main')
@@ -39,7 +40,11 @@
               Not Started
           @endswitch
         </div>
+        <!-- button edit -->
+        <div>
+          <a href="{{ route('tasks.edit', ['id' => $task->id]) }}" class="">Edit</a>
         </div>
+      </div>
     @endforeach
   </div>
   @endsection
