@@ -34,6 +34,11 @@ Route::get('/', function () {
         Route::get('/', 'index')->name('index');
         Route::get('/create', 'create')->name('create');
         Route::post('/', 'store')->name('store');
+        Route::get('/{$id}/edit', 'edit');
+        // memperbarui data (update)
+        Route::put('/{$id}', 'update');
+        // menghapus data
+        Route::delete('/{$id}', 'destroy');
         // tambah route edit
         Route::get('{id}/edit', 'edit')->name('edit');
     });

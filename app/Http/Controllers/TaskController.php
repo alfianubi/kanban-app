@@ -29,6 +29,7 @@ class TaskController extends Controller
     public function edit($id)
     {
         $pageTitle = 'Edit Task';
+        // Membaca data tertentu dari database
         $tasks = Task::find($id);
 
         $tasks = $tasks[$id - 1];
@@ -43,6 +44,16 @@ class TaskController extends Controller
 
     public function store(Request $request)
     {
+
+        $request->validate(
+            [
+                'name' => 'required',
+                'due_date' => 'required',
+                'status' => 'required',
+            ],
+            $request->all()
+        );
+
         Task::create([
             'name' => $request->name,
             'detail' => $request->detail,
@@ -51,5 +62,9 @@ class TaskController extends Controller
         ]);
 
         return redirect()->route('tasks.index');
+    }
+
+    public function delete() {
+
     }
 }
