@@ -30,11 +30,11 @@ class TaskController extends Controller
     {
         $pageTitle = 'Edit Task';
         // Membaca data tertentu dari database
-        $tasks = Task::find($id);
+        $task = Task::find($id);
 
-        $tasks = $tasks[$id - 1];
+        // $tasks = $tasks[$id - 1];
         return view('tasks.edit', ['pageTitle' => $pageTitle,
-        'tasks' => $tasks]);
+        'task' => $task]);
     }
 
     public function create() {
@@ -64,7 +64,33 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    public function delete() {
+    public function update(Request $request, $id)
+    {
+        $task = Task::find($id);
+        $task->update([
+            'name' => $request->name,
+            'detail' => $request->detail,
+            'due_date' => $request->due_date,
+            'status' => $request->status,
+        ]);
+        // Code untuk melakukan redirect menuju GET /tasks
+        return redirect()->route('tasks.index');
+    }
+    public function delete($id)
+    {
+        // Menyebutkan judul dari halaman yaitu "Delete Task"
+        $pageTitle = 'Delete Task';        
+        //  Memperoleh data task menggunakan $id
+        $task = Task::find($id);
+        // Menghasilkan nilai return berupa file view dengan halaman dan data task di atas 
+        return view('tasks.delete', ['pageTitle' => $pageTitle, 'task' => $task]);
+    }
+    public function destroy($id)
+    {
+        $task = Task::find($id);
+        $task->delete();
+        // Melakukan redirect menuju tasks.index
+        return redirect()->route('tasks.index');
 
     }
 }

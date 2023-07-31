@@ -50,9 +50,9 @@
         </div>
         <!-- button edit -->
         <div>
-          <a href="{{ route('tasks.edit', ['id' => $task->id]) }}" class="">Edit</a>
+          <a href="{{ route('tasks.edit', ['id' => $task->id]) }}">Edit</a>
           <span> | </span>
-          <a href="" class="">Hapus</a>
+          <a href="{{ route('tasks.delete', ['id' => $task->id]) }}">Hapus</a>
         </div>
       </div>
     @endforeach
