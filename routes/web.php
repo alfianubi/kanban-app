@@ -44,4 +44,6 @@ Route::get('/', function () {
         Route::get('{id}/edit', 'edit')->name('edit');
         // route untuk progress
         Route::get('progress', 'progress')->name('progress');
+        // route untuk move
+        Route::patch('{id}/move', 'move')->name('move');
     });
