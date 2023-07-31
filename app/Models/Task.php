@@ -8,6 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     use HasFactory;
+     // Tambahkan variable dibawah
+     public const STATUS_NOT_STARTED = 'not_started';
+     public const STATUS_IN_PROGRESS = 'in_progress';
+     public const STATUS_IN_REVIEW = 'in_review';
+     public const STATUS_COMPLETED = 'completed';
     // menambahkan Property $fillable dalam Laravel digunakan untuk meningkatkan keamanan
     protected $fillable = ['name', 'detail', 'due_date', 'status'];
 }

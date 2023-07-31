@@ -42,4 +42,6 @@ Route::get('/', function () {
         Route::delete('{id}/delete', 'destroy')->name('destroy');
         // tambah route edit
         Route::get('{id}/edit', 'edit')->name('edit');
+        // route untuk progress
+        Route::get('progress', 'progress')->name('progress');
     });
