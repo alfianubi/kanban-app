@@ -1,8 +1,13 @@
 <div class="task-progress-card">
     <div class="task-progress-card-left">
+        <!-- tambah aksi untuk update -->
+
+
       @if ($task->status == 'completed')
         <div class="material-icons task-progress-card-top-checked">check_circle</div>
       @else
+      {{-- <form action="{{ route('tasks.move', ['id => $task->id, 'status' => 
+      Task::STATUS_COMPLETED]) }}" method="POST" id="set-complete"></form> --}}
         <div class="material-icons task-progress-card-top-check">check_circle</div>
       @endif
       <a href="{{ route('tasks.edit', ['id' => $task->id]) }}" class="material-icons task-progress-card-top-edit">more_vert</a>

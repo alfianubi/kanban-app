@@ -32,7 +32,8 @@ Route::get('/', function () {
     ->controller(TaskController::class)
     ->group(function () {
         Route::get('/', 'index')->name('index');
-        Route::get('/create', 'create')->name('create');
+        // Route::get('create/{status?}')
+        Route::get('create/{status?}', 'create')->name('create');
         Route::post('/', 'store')->name('store');
         Route::get('/{id}/edit', 'edit')->name('edit');
         // memperbarui data (update)
@@ -46,4 +47,6 @@ Route::get('/', function () {
         Route::get('progress', 'progress')->name('progress');
         // route untuk move
         Route::patch('{id}/move', 'move')->name('move');
+        // route untuk move ceklis task list
+        Route::patch('{id}/check', 'move_tasklist')->name('move_tasklist');
     });

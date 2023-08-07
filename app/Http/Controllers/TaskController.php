@@ -37,9 +37,9 @@ class TaskController extends Controller
         'task' => $task]);
     }
 
-    public function create() {
-        $pageTitle = 'Create Task';
-        return view('tasks.create', ['pageTitle' => $pageTitle]);
+    public function create($status = null) {
+        $pageTitle = 'Add Task';
+        return view('tasks.create', ['pageTitle' => $pageTitle, 'status' => $status]);
     }
 
     public function store(Request $request)
@@ -116,7 +116,7 @@ class TaskController extends Controller
             Task::STATUS_COMPLETED, []
         ),
     ];
-
+    
     return view('tasks.progress', [
         'pageTitle' => $title,
         'tasks' => $tasks,
@@ -131,6 +131,21 @@ class TaskController extends Controller
             'status' => $request->status,
         ]);
 
+        // if ($request->has('from-index') && $request->get('from-index')) {
+        //     return redirect()->route('tasks.index');
+        // }
+
         return redirect()->route('tasks.progress');
     }
+
+    public function move_tasklist(int $id, Request $request)
+    {
+    $task = Task::findOrFail($id);
+
+    $task->update([
+        'status' => $request->status,
+    ]);    
+
+    return redirect()->route('tasks.index');
+    }        
 }
