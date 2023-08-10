@@ -6,9 +6,11 @@
       @if ($task->status == 'completed')
         <div class="material-icons task-progress-card-top-checked">check_circle</div>
       @else
+      <a href="{{ route('tasks.finish_progress', ['id' => $task->id ]) }}" style="text-decoration: none;" class="material-icons task-progress-card-top-check">
+        check_circle
+      </a>
       {{-- <form action="{{ route('tasks.move', ['id => $task->id, 'status' => 
-      Task::STATUS_COMPLETED]) }}" method="POST" id="set-complete"></form> --}}
-        <div class="material-icons task-progress-card-top-check">check_circle</div>
+      Task::STATUS_COMPLETED]) }}" method="POST" id="set-complete"></form> --}}        
       @endif
       <a href="{{ route('tasks.edit', ['id' => $task->id]) }}" class="material-icons task-progress-card-top-edit">more_vert</a>
     </div>

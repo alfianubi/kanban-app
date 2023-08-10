@@ -26,9 +26,13 @@
     @foreach ($tasks as $index => $task)
       <div class="table-body">
         <div class="table-body-task-name">
-          <span class="material-icons @if ($task->status == 'completed') check-icon-completed @else check-icon @endif" >
+          @if ($task->status == 'completed')
+            <div class="material-icons task-progress-card-top-checked">check_circle</div>
+          @else
+          <a href="{{ route('tasks.finish_tasklist', ['id' => $task->id ]) }}" style="text-decoration: none;" class="material-icons task-progress-card-top-check">
             check_circle
-          </span>
+          </a>
+          @endif          
           {{ $task->name }}
         </div>
         <div class="table-body-detail"> {{ $task->detail }} </div>

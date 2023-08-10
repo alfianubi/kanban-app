@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
 use Illuminate\Support\Facades\Route;
 
@@ -49,4 +50,17 @@ Route::get('/', function () {
         Route::patch('{id}/move', 'move')->name('move');
         // route untuk move ceklis task list
         Route::patch('{id}/check', 'move_tasklist')->name('move_tasklist');
+        Route::get('/{id}', 'finish_progress')->name('finish_progress');
+        Route::get('/{id}', 'finish_tasklist')->name('finish_tasklist');
+    });
+
+     // mengkelompokkan auth task controller 
+    Route::name('auth.')
+    ->controller(AuthController::class)
+    ->group(function () {
+        Route::get('signup', 'signupForm')->name('signupForm');
+        Route::post('signup', 'signup')->name('signup');
+         // Tambahkan route-route di bawah
+        Route::get('login', 'loginForm')->name('loginForm');
+        Route::post('login', 'login')->name('login');
     });

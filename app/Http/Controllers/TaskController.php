@@ -147,5 +147,23 @@ class TaskController extends Controller
     ]);    
 
     return redirect()->route('tasks.index');
-    }        
+    }
+    
+    public function finish_progress($id){
+        $task = Task::find($id);
+        $task->update([
+            'status' => Task::STATUS_COMPLETED,
+        ]);
+
+        return redirect()->route('tasks.progress');
+    }
+
+    public function finish_tasklist($id){
+        $task = Task::find($id);
+        $task->update([
+            'status' => Task::STATUS_COMPLETED,
+        ]);
+
+        return redirect()->route('tasks.index');
+    }
 }
