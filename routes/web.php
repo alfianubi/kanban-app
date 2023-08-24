@@ -16,9 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
     // route untuk halaman home
-Route::get('/', function () {
-        return view('home');
-    })->name('home'); 
+// Route::get('/', function () {
+//         return view('home');
+//     })->name('home')->middleware('auth'); 
+    // route halaman home mengambil data sesuai inputan
+Route::get('/', [TaskController::class, 'home'])
+    ->name('home')->middleware('auth'); 
+
     // route untuk halaman tasks
 // Route::get('/tasks/', [TaskController::class, 
 //     'index'])->name('tasks.index'); 
@@ -30,6 +34,7 @@ Route::get('/', function () {
  // mengkelompokkan route diatas
  Route::prefix('tasks')
     ->name('tasks.')
+    ->middleware('auth')
     ->controller(TaskController::class)
     ->group(function () {
         Route::get('/', 'index')->name('index');
@@ -58,9 +63,14 @@ Route::get('/', function () {
     Route::name('auth.')
     ->controller(AuthController::class)
     ->group(function () {
-        Route::get('signup', 'signupForm')->name('signupForm');
-        Route::post('signup', 'signup')->name('signup');
-         // Tambahkan route-route di bawah
-        Route::get('login', 'loginForm')->name('loginForm');
-        Route::post('login', 'login')->name('login');
+        Route::middleware('guest')->group(function () {
+            Route::get('signup', 'signupForm')->name('signupForm');
+            Route::post('signup', 'signup')->name('signup');
+            Route::get('login', 'loginForm')->name('loginForm');
+            Route::post('login', 'login')->name('login');
+        });
+
+        Route::middleware('auth')->group(function () {
+            Route::post('logout', 'logout')->name('logout');
+        });
     });

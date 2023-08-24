@@ -21,7 +21,10 @@
     <div>
       <p>Due on {{ $task->due_date }}</p>
     </div>
-    
+    <!-- Tambahkan code dibawah -->
+    <div>
+      <p>Owner: <strong>{{ $task->user->name }}</strong></p>
+    </div>
       <div class="@if ($leftStatus) task-progress-card-left @else task-progress-card-right @endif">
         @if ($leftStatus)
           <!-- Mengapit "button" dengan "form" -->
