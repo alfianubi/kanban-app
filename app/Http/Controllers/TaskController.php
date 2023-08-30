@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
 use App\Models\Task;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // Ditambahkan
+use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
@@ -30,11 +32,14 @@ class TaskController extends Controller
     {
         $pageTitle = 'Edit Task';
         // Membaca data tertentu dari database
-        $task = Task::find($id);
+        $task = Task::findOrFail($id);
 
-        // $tasks = $tasks[$id - 1];
-        return view('tasks.edit', ['pageTitle' => $pageTitle,
-        'task' => $task]);
+        Gate::authorize('update', $task); // Ditambahkan
+
+        return view('tasks.edit', [
+            'pageTitle' => $pageTitle,
+            'task' => $task,
+        ]);
     }
 
     public function create($status = null) {
@@ -67,7 +72,9 @@ class TaskController extends Controller
 
     public function update(Request $request, $id)
     {
-        $task = Task::find($id);
+        $task = Task::findOrFail($id);
+
+        Gate::authorize('update', $task);
         $task->update([
             'name' => $request->name,
             'detail' => $request->detail,
@@ -77,18 +84,24 @@ class TaskController extends Controller
         // Code untuk melakukan redirect menuju GET /tasks
         return redirect()->route('tasks.index');
     }
+
     public function delete($id)
     {
         // Menyebutkan judul dari halaman yaitu "Delete Task"
         $pageTitle = 'Delete Task';        
         //  Memperoleh data task menggunakan $id
-        $task = Task::find($id);
+        $task = Task::findOrFail($id);
+
+        Gate::authorize('delete', $task);
         // Menghasilkan nilai return berupa file view dengan halaman dan data task di atas 
         return view('tasks.delete', ['pageTitle' => $pageTitle, 'task' => $task]);
     }
+    
     public function destroy($id)
     {
-        $task = Task::find($id);
+        $task = Task::findOrFail($id);
+        Gate::authorize('delete', $task);
+
         $task->delete();
         // Melakukan redirect menuju tasks.index
         return redirect()->route('tasks.index');
