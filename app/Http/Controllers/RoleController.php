@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Role;
+use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RoleController extends Controller
 {
@@ -20,12 +22,36 @@ class RoleController extends Controller
 
     public function create()
     {
-        //
+        $pageTitle = 'Add Role';
+        $permissions = Permission::all();
+        return view('roles.create', [
+            'pageTitle' => $pageTitle,
+            'permissions' => $permissions,
+        ]);
     }
 
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => ['required'],
+            'permissionIds' => ['required'],
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $role = Role::create([
+                'name' => $request->name,
+            ]);
+
+            $role->permissions()->sync($request->permissionIds);
+
+            DB::commit();
+
+            return redirect()->route('roles.index');
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }    
     }
 
     public function edit($id)

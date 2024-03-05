@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // Ditambahkan
 use Illuminate\Support\Facades\Gate;
 
+
 class TaskController extends Controller
 {
 
@@ -74,7 +75,7 @@ class TaskController extends Controller
     {
         $task = Task::findOrFail($id);
 
-        Gate::authorize('update', $task);
+        // Gate::authorize('update', $task);
         $task->update([
             'name' => $request->name,
             'detail' => $request->detail,
@@ -188,5 +189,5 @@ class TaskController extends Controller
         $uncompleted_count = $tasks->whereNotIn('status', Task::STATUS_COMPLETED)->count();
 
         return view('home', ['completed_count' => $completed_count, 'uncompleted_count' => $uncompleted_count]);
-    }
+    }    
 }

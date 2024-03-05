@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\TaskController;
+use App\Http\Controllers\RoleController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -37,7 +38,7 @@ Route::get('/', [TaskController::class, 'home'])
     ->middleware('auth')
     ->controller(TaskController::class)
     ->group(function () {
-        Route::get('/', 'index')->name('index');
+        Route::get('/', 'index')->name('index')->middleware('ujicoba');
         // Route::get('create/{status?}')
         Route::get('create/{status?}', 'create')->name('create');
         Route::post('/', 'store')->name('store');
@@ -78,7 +79,7 @@ Route::get('/', [TaskController::class, 'home'])
     // sebuah route untuk role permission CRUD tabel
     Route::prefix('roles')
     ->name('roles.')
-    ->middleware('auth')
+    // ->middleware('auth')
     ->controller(RoleController::class)
     ->group(function () {
         Route::get('', 'index')->name('index');

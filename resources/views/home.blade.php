@@ -25,5 +25,5 @@
         <h2>You still have {{ $uncompleted_count }} tasks left</h2>
       </div>
     </div>
-  </div>
+  </div> 
 @endsection
